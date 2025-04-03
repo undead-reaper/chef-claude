@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chef Claude
 
-## Getting Started
+Chef Claude is a web application that helps you create recipes based on ingredients you have on hand. Simply input your available ingredients, and Chef Claude will generate a delicious recipe tailored to what you have in your kitchen.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Ingredient Management**: Easily add ingredients you have available
+- **AI-Powered Recipe Generation**: Get creative recipes based on your ingredient list
+- **Detailed Recipe Output**: Complete with ingredients, instructions, and helpful notes
+- **Responsive Design**: Works on desktop and mobile devices
+- **Clean, Intuitive UI**: Built with Tailwind CSS and shadcn/ui components
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Screenshots
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![Chef Claude Ingredients Input](screenshots/screenshot_1.jpeg)
+![Chef Claude Recipe Output Pt 1](screenshots/screenshot_2.jpeg)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Check out the live demo [here](https://chef-claude-sage.vercel.app/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Next.js 15**: React framework for production
+- **Tailwind CSS**: Utility-first CSS framework
+- **shadcn/ui**: High-quality UI components
+- **Perplexity AI API**: Powers the recipe generation
+- **Bun**: JavaScript runtime & package manager
 
-## Deploy on Vercel
+## Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/undead-reaper/chef-claude.git
+   cd chef-claude
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Install dependencies:
+   ```bash
+   bun install
+   ```
+
+3. Create a `.env.local` file in the root directory with your Perplexity API key:
+   ```
+   PERPLEXITY_API_KEY=your_api_key_here
+   ```
+
+4. Start the development server:
+   ```bash
+   bun --bun run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `PERPLEXITY_API_KEY` | Your Perplexity AI API key (required) |
+
+## Deployment
+
+This project is configured for easy deployment on Vercel. Connect your GitHub repository to Vercel and it will automatically deploy when you push changes.
+
+Don't forget to add your environment variables in the Vercel dashboard.
+
+## License
+
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
+
+## Contributing
+
+While there are no specific contribution guidelines at this time, feel free to submit pull requests if you have ideas for improvements or new features.
+
+## Acknowledgements
+
+- Powered by [Perplexity AI](https://www.perplexity.ai/)
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
