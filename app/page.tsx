@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import { getRecipe } from "@/lib/ai";
 import { motion } from "motion/react";
@@ -26,9 +26,21 @@ export default function Home() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const readyRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (recipe !== null && readyRef.current !== null) {
+      readyRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [recipe]);
+
   async function handleGetRecipe() {
     console.log("Getting recipe with ingredients:", ingredients);
     setLoading(true);
+    setRecipe(null);
     const result = await getRecipe(ingredients);
     console.log("Received recipe:", result);
 
@@ -63,6 +75,7 @@ export default function Home() {
             setIngredients={setIngredients}
             handleGetRecipe={handleGetRecipe}
             loading={loading}
+            readyRef={readyRef}
           />
         </div>
 

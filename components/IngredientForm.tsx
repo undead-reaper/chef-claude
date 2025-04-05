@@ -12,12 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CircleMinus, Loader2, Plus, PlusCircle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { read } from "fs";
 
 interface IngredientFormProps {
   ingredients: string[];
   handleGetRecipe: () => void;
   setIngredients: React.Dispatch<React.SetStateAction<string[]>>;
   loading: boolean;
+  readyRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const formSchema = z.object({
@@ -31,6 +33,7 @@ const IngredientForm = ({
   handleGetRecipe,
   setIngredients,
   loading,
+  readyRef,
 }: IngredientFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -174,6 +177,7 @@ const IngredientForm = ({
                 <motion.div
                   className="flex flex-col md:flex-row gap-4 justify-between items-center mt-10 p-5 bg-amber-100 border border-amber-200 rounded-lg"
                   variants={ctaVariants}
+                  ref={readyRef}
                   initial="hidden"
                   animate="visible"
                   exit="hidden"
