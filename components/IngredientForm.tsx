@@ -1,6 +1,4 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,10 +7,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { CircleMinus, Loader2, Plus, PlusCircle } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import { read } from "fs";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleMinus, Loader2, Plus } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 interface IngredientFormProps {
   ingredients: string[];
@@ -76,7 +75,7 @@ const IngredientForm = ({
       scale: 1,
       transition: {
         duration: 0.5,
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
       },
     },

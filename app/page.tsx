@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
+import IngredientForm from "@/components/IngredientForm";
+import type { Recipe } from "@/components/RecipeCard";
+import RecipeCard from "@/components/RecipeCard";
 import { getRecipe } from "@/lib/ai";
 import { motion } from "motion/react";
-import IngredientForm from "@/components/IngredientForm";
-import RecipeCard from "@/components/RecipeCard";
-import type { Recipe } from "@/components/RecipeCard";
-import { set } from "zod";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -24,7 +24,8 @@ const containerVariants = {
 export default function Home() {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [loading, setLoading] = useState(false);
+
+  const [pending, startTransition] = useTransition();
 
   const readyRef = useRef<HTMLDivElement | null>(null);
 
@@ -39,25 +40,22 @@ export default function Home() {
 
   async function handleGetRecipe() {
     console.log("Getting recipe with ingredients:", ingredients);
-    setLoading(true);
-    setRecipe(null);
-    const result = await getRecipe(ingredients);
-    console.log("Received recipe:", result);
-
-    // Check if result is a string (JSON) and convert it to Recipe object
-    if (typeof result === "string") {
-      try {
-        const parsedRecipe = JSON.parse(result) as Recipe;
-        setRecipe(parsedRecipe);
-      } catch (error) {
-        console.error("Failed to parse recipe JSON:", error);
-        setRecipe(null);
-      }
-    } else {
-      // If it's already an object, use it directly
-      setRecipe(result);
-    }
-    setLoading(false);
+    startTransition(async () => {
+      setRecipe(null);
+      const result = await getRecipe(ingredients).then((result) => {
+        if (result instanceof Error) {
+          toast.error("Could not generate recipe.", {
+            description: result.message,
+          });
+        } else {
+          toast.success("Recipe Generated Successfully!", {
+            description: "Bon Appetit Fellow Chef! 🌟",
+          });
+          setRecipe(result);
+        }
+      });
+      console.log("Received recipe:", result);
+    });
   }
   return (
     <motion.div
@@ -74,7 +72,7 @@ export default function Home() {
             ingredients={ingredients}
             setIngredients={setIngredients}
             handleGetRecipe={handleGetRecipe}
-            loading={loading}
+            loading={pending}
             readyRef={readyRef}
           />
         </div>
